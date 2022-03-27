@@ -35,6 +35,10 @@ const Users = () => {
     );
   };
 
+  const handleDelete = (id) => {
+    setUsers((prevState) => prevState.filter((user) => user._id !== id));
+  };
+
   const renderTable = () => {
     if (users.length === 0) return;
     return (
@@ -77,6 +81,14 @@ const Users = () => {
                 <td>{profession.name}</td>
                 <td>{completedMeetings}</td>
                 <td>{rate}</td>
+                <td>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => handleDelete(_id)}
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
             );
           })}
