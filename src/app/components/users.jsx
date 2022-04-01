@@ -1,37 +1,6 @@
 import React from "react";
 
 const Users = (props) => {
-  const renderPhrase = (count) => {
-    let classes = "badge m-2 ";
-
-    const getDeclinationPrhase = (count) => {
-      if (
-        (count % 100 < 11 || count % 100 > 14) &&
-        (count % 10 === 2 || count % 10 === 3 || count % 10 === 4)
-      ) {
-        return "человека тусанёт";
-      } else if (count % 100 === 1 || (count % 100) % 10 === 1) {
-        return "человек тусанёт";
-      }
-
-      return "человек тусанут";
-    };
-
-    if (count === 0) {
-      classes += "bg-danger";
-      return (
-        <span className={classes}>Никто с тобой сегодня не тусанёт :(</span>
-      );
-    }
-
-    classes += "bg-primary";
-    return (
-      <span className={classes}>
-        {count} {getDeclinationPrhase(count)} с тобой сегодня
-      </span>
-    );
-  };
-
   const renderTable = () => {
     if (props.usersData.length !== 0) {
       const { usersData } = props;
@@ -84,12 +53,7 @@ const Users = (props) => {
     }
   };
 
-  return (
-    <>
-      <h2>{renderPhrase(props.usersData.length)}</h2>
-      {renderTable()}
-    </>
-  );
+  return <>{renderTable()}</>;
 };
 
 export default Users;
