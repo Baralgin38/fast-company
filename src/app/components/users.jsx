@@ -1,10 +1,9 @@
 import React from "react";
+import User from "./user";
 
 const Users = (props) => {
   const renderTable = () => {
     if (props.usersData.length !== 0) {
-      const { usersData } = props;
-
       return (
         <table className="table">
           <thead>
@@ -18,7 +17,9 @@ const Users = (props) => {
             </tr>
           </thead>
           <tbody>
-            {usersData.map((user) => {
+            {
+              <User usersData={props.usersData} onDelete={props.onDelete} />
+              /* {usersData.map((user) => {
               return (
                 <tr key={user._id}>
                   <td>{user.name}</td>
@@ -46,7 +47,8 @@ const Users = (props) => {
                   </td>
                 </tr>
               );
-            })}
+            })} */
+            }
           </tbody>
         </table>
       );
