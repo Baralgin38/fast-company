@@ -1,21 +1,12 @@
 import React from "react";
+import Quality from "./quality";
 
 const User = (props) => {
   const users = props.usersData.map((user) => {
     return (
       <tr key={user._id}>
         <td>{user.name}</td>
-        <td>
-          {user.qualities.map(({ _id, name, color }) => {
-            const badgeClass = `badge bg-${color} m-1`;
-
-            return (
-              <span key={_id} className={badgeClass}>
-                {name}
-              </span>
-            );
-          })}
-        </td>
+        <td>{<Quality qualities={user.qualities} />}</td>
         <td>{user.profession.name}</td>
         <td>{user.completedMeetings}</td>
         <td>{user.rate}</td>
