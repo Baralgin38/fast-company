@@ -1,5 +1,6 @@
 import React from "react";
 import Quality from "./quality";
+import Bookmark from "./bookmark";
 
 const User = (props) => {
   const users = props.usersData.map((user) => {
@@ -10,6 +11,9 @@ const User = (props) => {
         <td>{user.profession.name}</td>
         <td>{user.completedMeetings}</td>
         <td>{user.rate}</td>
+        <td>
+          {<Bookmark user={user} onClickBookmark={props.onClickBookmark} />}
+        </td>
         <td>
           <button
             className="btn btn-danger"

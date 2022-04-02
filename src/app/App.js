@@ -10,10 +10,27 @@ const App = () => {
     setUsers((prevState) => prevState.filter((user) => user._id !== id));
   };
 
+  const handleClickBookmark = (id) => {
+    const updatedState = users.map((user) => {
+      if (user._id === id) {
+        user.bookmark = !user.bookmark;
+        return user;
+      }
+
+      return user;
+    });
+
+    setUsers(updatedState);
+  };
+
   return (
     <>
       <SearchStatus peopleNumber={users.length} />
-      <Users usersData={users} onDelete={handleDelete} />
+      <Users
+        usersData={users}
+        onDelete={handleDelete}
+        onClickBookmark={handleClickBookmark}
+      />
     </>
   );
 };

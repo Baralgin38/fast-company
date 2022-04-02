@@ -13,11 +13,18 @@ const Users = (props) => {
               <th scope="col">Профессия</th>
               <th scope="col">Встретился, раз</th>
               <th scope="col">Оценка</th>
+              <th scope="col">Избранное</th>
               <th scope="col" />
             </tr>
           </thead>
           <tbody>
-            {<User usersData={props.usersData} onDelete={props.onDelete} />}
+            {
+              <User
+                usersData={props.usersData}
+                onDelete={props.onDelete}
+                onClickBookmark={props.onClickBookmark}
+              />
+            }
           </tbody>
         </table>
       );
