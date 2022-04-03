@@ -3,10 +3,17 @@ import React from "react";
 const Bookmark = (props) => {
   const getBookmarkInfo = (isBookmark) => {
     if (isBookmark) {
-      return <span className="bi bi-bookmark-check"></span>;
+      return (
+        <span
+          className="bi bi-bookmark-check"
+          style={{ fontSize: "1.5em" }}
+        ></span>
+      );
     }
 
-    return <span className="bi bi-bookmark"></span>;
+    return (
+      <span className="bi bi-bookmark" style={{ fontSize: "1.5em" }}></span>
+    );
   };
 
   return (

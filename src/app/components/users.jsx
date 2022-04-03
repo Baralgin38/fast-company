@@ -18,13 +18,14 @@ const Users = (props) => {
             </tr>
           </thead>
           <tbody>
-            {
+            {props.usersData.map((user) => (
               <User
-                usersData={props.usersData}
+                key={user._id}
+                user={user}
                 onDelete={props.onDelete}
                 onClickBookmark={props.onClickBookmark}
               />
-            }
+            ))}
           </tbody>
         </table>
       );
