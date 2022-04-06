@@ -14,7 +14,6 @@ const App = () => {
     const updatedState = users.map((user) => {
       if (user._id === id) {
         user.bookmark = !user.bookmark;
-        return user;
       }
 
       return user;
