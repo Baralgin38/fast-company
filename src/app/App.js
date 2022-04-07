@@ -10,7 +10,7 @@ const App = () => {
     setUsers((prevState) => prevState.filter((user) => user._id !== id));
   };
 
-  const handleClickBookmark = (id) => {
+  const handleToggleBookmark = (id) => {
     const updatedState = users.map((user) => {
       if (user._id === id) {
         user.bookmark = !user.bookmark;
@@ -26,9 +26,9 @@ const App = () => {
     <>
       <SearchStatus peopleNumber={users.length} />
       <Users
-        usersData={users}
+        users={users}
         onDelete={handleDelete}
-        onClickBookmark={handleClickBookmark}
+        onToggleBookmark={handleToggleBookmark}
       />
     </>
   );
