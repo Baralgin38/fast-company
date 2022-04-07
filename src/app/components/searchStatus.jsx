@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const SearchStatus = ({ peopleNumber }) => {
   let classes = 'badge m-2 ';
@@ -33,6 +34,10 @@ const SearchStatus = ({ peopleNumber }) => {
       </span>
     </h2>
   );
+};
+
+SearchStatus.propTypes = {
+  peopleNumber: PropTypes.number.isRequired
 };
 
 export default SearchStatus;

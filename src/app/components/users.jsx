@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Pagination from './pagination';
 import User from './user';
 import { paginate } from '../utils/paginate';
+import PropTypes from 'prop-types';
 
 const Users = ({ users, ...rest }) => {
   const count = users.length;
@@ -14,9 +15,10 @@ const Users = ({ users, ...rest }) => {
 
   const userCrop = paginate(users, currentPage, pageSize);
 
-  // if (userCrop.length === 0 && users.length !== 0) {
-  //   setCurrentPage(currentPage - 1);
-  // }
+  // Попытка решения бага с удалением юзеров с конца списка
+  if (userCrop.length === 0 && users.length !== 0) {
+    setCurrentPage(currentPage - 1);
+  }
 
   return (
     <>
@@ -48,6 +50,13 @@ const Users = ({ users, ...rest }) => {
       />
     </>
   );
+};
+
+Users.propTypes = {
+  users: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onToggleBookmark: PropTypes.func.isRequired
+  // rest: PropTypes.objectOf(PropTypes.func).isRequired
 };
 
 export default Users;
