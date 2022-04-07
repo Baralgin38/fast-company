@@ -1,6 +1,6 @@
-import React from "react";
-import Quality from "./quality";
-import Bookmark from "./bookmark";
+import React from 'react';
+import Quality from './quality';
+import Bookmark from './bookmark';
 
 const User = ({
   _id,
@@ -11,7 +11,7 @@ const User = ({
   rate,
   onDelete,
   bookmark,
-  onToggleBookmark,
+  onToggleBookmark
 }) => {
   return (
     <tr>

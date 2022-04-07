@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import Pagination from "./pagination";
-import User from "./user";
-import { paginate } from "../utils/paginate";
+import React, { useState } from 'react';
+import Pagination from './pagination';
+import User from './user';
+import { paginate } from '../utils/paginate';
 
 const Users = ({ users, ...rest }) => {
   const count = users.length;
