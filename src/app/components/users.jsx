@@ -14,6 +14,10 @@ const Users = ({ users, ...rest }) => {
 
   const userCrop = paginate(users, currentPage, pageSize);
 
+  // if (userCrop.length === 0 && users.length !== 0) {
+  //   setCurrentPage(currentPage - 1);
+  // }
+
   return (
     <>
       {users.length > 0 && (
