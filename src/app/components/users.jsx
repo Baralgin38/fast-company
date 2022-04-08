@@ -56,7 +56,6 @@ Users.propTypes = {
   users: PropTypes.arrayOf(PropTypes.object).isRequired,
   onDelete: PropTypes.func.isRequired,
   onToggleBookmark: PropTypes.func.isRequired
-  // rest: PropTypes.objectOf(PropTypes.func).isRequired
 };
 
 export default Users;
