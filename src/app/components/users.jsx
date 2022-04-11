@@ -15,11 +15,6 @@ const Users = ({ users, ...rest }) => {
 
   const userCrop = paginate(users, currentPage, pageSize);
 
-  // Попытка решения бага с удалением юзеров с конца списка
-  if (userCrop.length === 0 && users.length !== 0) {
-    setCurrentPage(currentPage - 1);
-  }
-
   return (
     <>
       {users.length > 0 && (
@@ -44,6 +39,7 @@ const Users = ({ users, ...rest }) => {
       )}
       <Pagination
         itemsCount={count}
+        itemsCountOnPage={userCrop.length}
         pageSize={pageSize}
         currentPage={currentPage}
         onPageChange={handlePageChange}
