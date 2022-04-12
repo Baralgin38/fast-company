@@ -6,8 +6,8 @@ import PropTypes from 'prop-types';
 import GroupList from './groupList';
 import api from '../api';
 
-const Users = ({ users, ...rest }) => {
-  const count = users.length;
+const Users = ({ users: allUsers, ...rest }) => {
+  const count = allUsers.length;
   const pageSize = 4;
   const [currentPage, setCurrentPage] = useState(1);
   const [professions, setProfessions] = useState();
@@ -25,7 +25,10 @@ const Users = ({ users, ...rest }) => {
     setCurrentPage(pageIndex);
   };
 
-  const userCrop = paginate(users, currentPage, pageSize);
+  const filteredUsers = selectedProf
+    ? allUsers.filter((user) => user.profession === selectedProf)
+    : allUsers;
+  const userCrop = paginate(filteredUsers, currentPage, pageSize);
 
   return (
     <>
@@ -36,7 +39,7 @@ const Users = ({ users, ...rest }) => {
           selectedItem={selectedProf}
         />
       )}
-      {users.length > 0 && (
+      {allUsers.length > 0 && (
         <table className="table">
           <thead>
             <tr>
