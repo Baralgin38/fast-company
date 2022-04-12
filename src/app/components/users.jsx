@@ -29,7 +29,9 @@ const Users = ({ users, ...rest }) => {
 
   return (
     <>
-      <GroupList items={professions} onItemSelect={handleProfessionSelect} />
+      {professions && (
+        <GroupList items={professions} onItemSelect={handleProfessionSelect} />
+      )}
       {users.length > 0 && (
         <table className="table">
           <thead>
