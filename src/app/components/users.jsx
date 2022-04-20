@@ -6,12 +6,14 @@ import PropTypes from 'prop-types';
 import GroupList from './groupList';
 import SearchStatus from './searchStatus';
 import api from '../api';
+import _ from 'lodash';
 
 const Users = ({ users: allUsers, ...rest }) => {
   const pageSize = 4;
   const [currentPage, setCurrentPage] = useState(1);
   const [professions, setProfessions] = useState();
   const [selectedProf, setSelectedProf] = useState();
+  const [sortBy, setSortBy] = useState({ iter: 'name', order: 'asc' });
 
   useEffect(() => {
     api.professions.fetchAll().then((data) => setProfessions(data));
@@ -30,7 +32,14 @@ const Users = ({ users: allUsers, ...rest }) => {
   };
 
   const handleSortClick = (item) => {
-    console.log(item);
+    if (sortBy.iter === item) {
+      setSortBy((prevState) => ({
+        ...prevState,
+        order: prevState.order === 'asc' ? 'desc' : 'asc'
+      }));
+    } else {
+      setSortBy({ iter: item, order: 'asc' });
+    }
   };
 
   const clearFilter = () => {
@@ -54,7 +63,8 @@ const Users = ({ users: allUsers, ...rest }) => {
   }
 
   const count = filteredUsers.length;
-  const userCrop = paginate(filteredUsers, currentPage, pageSize);
+  const sortedUsers = _.orderBy(filteredUsers, [sortBy.iter], [sortBy.order]);
+  const userCrop = paginate(sortedUsers, currentPage, pageSize);
 
   return (
     <div className="d-flex">
