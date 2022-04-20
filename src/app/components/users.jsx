@@ -33,9 +33,22 @@ const Users = ({ users: allUsers, ...rest }) => {
     setSelectedProf(undefined);
   };
 
-  const filteredUsers = selectedProf
-    ? allUsers.filter((user) => user.profession._id === selectedProf._id)
-    : allUsers;
+  // const filteredUsers = selectedProf
+  //   ? allUsers.filter(
+  //       (user) =>
+  //         JSON.stringify(user.profession) === JSON.stringify(selectedProf)
+  //     )
+  //   : allUsers;
+
+  let filteredUsers = null;
+  if (selectedProf) {
+    filteredUsers = allUsers.filter(
+      (user) => JSON.stringify(user.profession) === JSON.stringify(selectedProf)
+    );
+  } else {
+    filteredUsers = allUsers;
+  }
+
   const count = filteredUsers.length;
   const userCrop = paginate(filteredUsers, currentPage, pageSize);
 
