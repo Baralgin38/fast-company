@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TableBody from './tableBody';
-import TableHeader from './tableHeader';
+import Table from './table';
 import Bookmark from './bookmark';
 import QualitiesList from './qualitiesList';
 
@@ -41,10 +40,12 @@ const UsersTable = ({
     }
   };
   return (
-    <table className="table">
-      <TableHeader {...{ onSort, selectedSort, columns }} />
-      <TableBody {...{ columns, data: users }} />
-    </table>
+    <Table
+      onSort={onSort}
+      selectedSort={selectedSort}
+      columns={columns}
+      data={users}
+    />
   );
 };
 
