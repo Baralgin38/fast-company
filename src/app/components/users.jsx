@@ -2,14 +2,13 @@ import React, { useState, useEffect } from 'react';
 import Pagination from './pagination';
 import UsersTable from './usersTable';
 import { paginate } from '../utils/paginate';
-import PropTypes from 'prop-types';
 import GroupList from './groupList';
 import SearchStatus from './searchStatus';
 import api from '../api';
 import _ from 'lodash';
 
 const Users = () => {
-  const pageSize = 4;
+  const pageSize = 6;
   const [currentPage, setCurrentPage] = useState(1);
   const [professions, setProfessions] = useState();
   const [selectedProf, setSelectedProf] = useState();
@@ -66,6 +65,7 @@ const Users = () => {
   //         JSON.stringify(user.profession) === JSON.stringify(selectedProf)
   //     )
   //   : users;
+
   if (users) {
     let filteredUsers = null;
     if (selectedProf) {
@@ -119,13 +119,7 @@ const Users = () => {
       </div>
     );
   }
-  return 'loading..';
-};
-
-Users.propTypes = {
-  users: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onDelete: PropTypes.func.isRequired,
-  onToggleBookmark: PropTypes.func.isRequired
+  return 'Loding...';
 };
 
 export default Users;

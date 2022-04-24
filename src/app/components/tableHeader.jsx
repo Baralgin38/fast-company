@@ -13,6 +13,14 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
     }
   };
 
+  const addSortMarker = (currentSortItem, currentItem) => {
+    let caretClass = 'bi bi-caret-';
+    if (currentSortItem.path && currentSortItem.path === currentItem.path) {
+      caretClass += currentSortItem.order === 'desc' ? 'down-fill' : 'up-fill';
+      return <span className={caretClass}></span>;
+    }
+  };
+
   return (
     <thead>
       <tr>
@@ -28,6 +36,7 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
             scope="col"
           >
             {columns[column].name}
+            {addSortMarker(selectedSort, columns[column])}
           </th>
         ))}
       </tr>
