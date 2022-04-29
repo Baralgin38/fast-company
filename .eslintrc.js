@@ -3,7 +3,6 @@ module.exports = {
     browser: true,
     es2021: true
   },
-  extends: ['plugin:react/recommended', 'standard'],
   parserOptions: {
     ecmaFeatures: {
       jsx: true
@@ -11,13 +10,19 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module'
   },
-  plugins: ['react'],
   rules: {
     semi: [2, 'always'],
     'space-before-function-paren': [
       'error',
       { anonymous: 'always', named: 'never' }
     ],
-    quotes: ['error', 'single', { allowTemplateLiterals: true }]
-  }
+    quotes: ['error', 'single', { allowTemplateLiterals: true }],
+    'prettier/prettier': ['error', { endOfLine: 'auto' }]
+  },
+  plugins: ['react', 'prettier'],
+  extends: [
+    'plugin:react/recommended',
+    'standard',
+    'plugin:prettier/recommended'
+  ]
 };

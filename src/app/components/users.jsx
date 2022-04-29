@@ -59,23 +59,13 @@ const Users = () => {
     setSelectedProf(undefined);
   };
 
-  // const filteredUsers = selectedProf
-  //   ? users.filter(
-  //       (user) =>
-  //         JSON.stringify(user.profession) === JSON.stringify(selectedProf)
-  //     )
-  //   : users;
-
   if (users) {
-    let filteredUsers = null;
-    if (selectedProf) {
-      filteredUsers = users.filter(
-        (user) =>
-          JSON.stringify(user.profession) === JSON.stringify(selectedProf)
-      );
-    } else {
-      filteredUsers = users;
-    }
+    const filteredUsers = selectedProf
+      ? users.filter(
+          (user) =>
+            JSON.stringify(user.profession) === JSON.stringify(selectedProf)
+        )
+      : users;
 
     const count = filteredUsers.length;
     const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]);
