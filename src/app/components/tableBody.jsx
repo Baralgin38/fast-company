@@ -12,6 +12,12 @@ const TableBody = ({ data, columns }) => {
         return component(item);
       }
       return component;
+    } else if (column === 'name') {
+      return (
+        <Link to={`/users/${item._id}`}>
+          {_.get(item, columns[column].path)}
+        </Link>
+      );
     }
     return _.get(item, columns[column].path);
   };
@@ -21,11 +27,7 @@ const TableBody = ({ data, columns }) => {
       {data.map((item) => (
         <tr key={item._id}>
           {Object.keys(columns).map((column) => (
-            <td key={column}>
-              <Link to={`/users/${item._id}`}>
-                {renderContent(item, column)}
-              </Link>
-            </td>
+            <td key={column}>{renderContent(item, column)}</td>
           ))}
         </tr>
       ))}

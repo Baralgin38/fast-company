@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import api from '../api';
+import UserCard from './userCard';
 
 const UserPage = ({ userId }) => {
   const [user, setUser] = useState();
@@ -13,9 +14,9 @@ const UserPage = ({ userId }) => {
   return (
     <>
       {user ? (
-        <h2>{`I'm ${user.name} with id: ${user._id}`}</h2>
+        <UserCard userData={user} />
       ) : (
-        'Loading user data...'
+        <p className="m-2">Loading user data...</p>
       )}
     </>
   );
