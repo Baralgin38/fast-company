@@ -10,7 +10,6 @@ const UserPage = ({ userId }) => {
     api.users.getUserById(userId).then((userData) => setUser(userData));
   }, []);
 
-  console.log(user);
   return (
     <>
       {user ? (
