@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
+  const [data, setData] = useState({ email: '', password: '' });
 
-  const handleChange = (evt) => {
-    setEmail(evt.target.value);
+  const handleChange = ({ target }) => {
+    setData((prevState) => ({ ...prevState, [target.name]: target.value }));
   };
 
   return (
@@ -13,13 +13,25 @@ const Login = () => {
         <label className="m-3" htmlFor="email">
           Email
         </label>
-        <input type="text" id="email" value={email} onChange={handleChange} />
+        <input
+          type="text"
+          id="email"
+          value={data.email}
+          onChange={handleChange}
+          name="email"
+        />
       </div>
       <div>
         <label className="m-3" htmlFor="password">
           Пароль
         </label>
-        <input type="password" id="password" />
+        <input
+          type="password"
+          id="password"
+          onChange={handleChange}
+          value={data.password}
+          name="password"
+        />
       </div>
     </form>
   );
