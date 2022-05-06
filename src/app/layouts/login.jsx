@@ -3,7 +3,7 @@ import TextField from '../components/textField';
 
 const Login = () => {
   const [data, setData] = useState({ email: '', password: '' });
-  const [, setErrors] = useState();
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     validate();
@@ -38,6 +38,7 @@ const Login = () => {
         name="email"
         value={data.email}
         onChange={handleChange}
+        error={errors.email}
       />
       <TextField
         type="password"
@@ -45,6 +46,7 @@ const Login = () => {
         name="password"
         value={data.password}
         onChange={handleChange}
+        error={errors.password}
       />
       <button type="submit" className="btn btn-primary btn-sm m-3">
         Отправить данные
