@@ -53,6 +53,8 @@ const Login = () => {
     console.log(data);
   };
 
+  const isValid = Object.keys(errors).length === 0;
+
   return (
     <form onSubmit={handleSubmit}>
       <TextField
@@ -70,7 +72,11 @@ const Login = () => {
         onChange={handleChange}
         error={errors.password}
       />
-      <button type="submit" className="btn btn-primary btn-sm m-3">
+      <button
+        type="submit"
+        className="btn btn-primary btn-sm m-3"
+        disabled={!isValid}
+      >
         Отправить данные
       </button>
     </form>
