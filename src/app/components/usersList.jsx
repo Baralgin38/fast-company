@@ -6,6 +6,7 @@ import GroupList from '../components/groupList';
 import SearchStatus from '../components/searchStatus';
 import api from '../api';
 import _ from 'lodash';
+import SearchField from './searchField';
 
 const UsersList = () => {
   const pageSize = 6;
@@ -14,6 +15,7 @@ const UsersList = () => {
   const [selectedProf, setSelectedProf] = useState();
   const [sortBy, setSortBy] = useState({ iter: 'name', order: 'asc' });
   const [users, setUsers] = useState();
+  const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
     api.users.fetchAll().then((data) => setUsers(data));
@@ -45,6 +47,10 @@ const UsersList = () => {
 
   const handleProfessionSelect = (item) => {
     setSelectedProf(item);
+
+    // Очистка поиска при фильтрации по профессии.
+    // Но я не уверен что это верное место для вызова функции очистки
+    clearSearchField();
   };
 
   const handlePageChange = (pageIndex) => {
@@ -59,13 +65,28 @@ const UsersList = () => {
     setSelectedProf(undefined);
   };
 
+  const handleChangeSearch = ({ target }) => {
+    setSearchValue(target.value);
+    clearFilter();
+  };
+
+  const searchUser = () => {
+    return users.filter((user) =>
+      user.name.toLowerCase().includes(searchValue.toLocaleLowerCase())
+    );
+  };
+
+  const clearSearchField = () => {
+    setSearchValue('');
+  };
+
   if (users) {
     const filteredUsers = selectedProf
       ? users.filter(
           (user) =>
             JSON.stringify(user.profession) === JSON.stringify(selectedProf)
         )
-      : users;
+      : searchUser() || users;
 
     const count = filteredUsers.length;
     const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]);
@@ -87,6 +108,11 @@ const UsersList = () => {
         )}
         <div className="d-flex flex-column">
           <SearchStatus peopleNumber={count} />
+          <SearchField
+            value={searchValue}
+            onChange={handleChangeSearch}
+            onClear={clearSearchField}
+          />
           {count > 0 && (
             <UsersTable
               users={userCrop}
