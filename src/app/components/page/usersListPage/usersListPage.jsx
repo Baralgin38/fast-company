@@ -43,13 +43,10 @@ const UsersListPage = () => {
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedProf]);
+  }, [selectedProf, searchValue]);
 
   const handleProfessionSelect = (item) => {
     setSelectedProf(item);
-
-    // Очистка поиска при фильтрации по профессии.
-    // Но я не уверен что это верное место для вызова функции очистки
     clearSearchField();
   };
 
