@@ -7,7 +7,7 @@ const UserCard = ({ userData }) => {
   const history = useHistory();
 
   const allUsersBtnClickHandler = () => {
-    history.push('/users');
+    history.push(history.location.pathname + '/edit');
   };
 
   return (
@@ -23,7 +23,7 @@ const UserCard = ({ userData }) => {
         className="btn btn-primary btn-sm m-2"
         onClick={allUsersBtnClickHandler}
       >
-        Все пользователи
+        Редактировать
       </button>
     </>
   );
