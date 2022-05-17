@@ -21,8 +21,8 @@ const UserPage = ({ userId }) => {
   );
 };
 
-export default UserPage;
-
 UserPage.propTypes = {
   userId: PropTypes.string
 };
+
+export default UserPage;
