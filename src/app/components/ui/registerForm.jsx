@@ -17,7 +17,7 @@ const RegisterForm = () => {
     licence: false
   });
   const [errors, setErrors] = useState({});
-  const [professions, setProfessions] = useState();
+  const [professions, setProfessions] = useState({});
   const [qualities, setQualities] = useState({});
 
   useEffect(() => {
@@ -25,8 +25,22 @@ const RegisterForm = () => {
   }, [data]);
 
   useEffect(() => {
-    api.professions.fetchAll().then((data) => setProfessions(data));
-    api.qualities.fetchAll().then((data) => setQualities(data));
+    api.professions.fetchAll().then((data) => {
+      console.log(data);
+      const professionsList = Object.keys(data).map((professionName) => ({
+        label: data[professionName].name,
+        value: data[professionName]._id
+      }));
+      setProfessions(professionsList);
+    });
+    api.qualities.fetchAll().then((data) => {
+      const qualitiesList = Object.keys(data).map((optionName) => ({
+        value: data[optionName]._id,
+        label: data[optionName].name,
+        color: data[optionName].color
+      }));
+      setQualities(qualitiesList);
+    });
   }, []);
 
   const validate = () => {
