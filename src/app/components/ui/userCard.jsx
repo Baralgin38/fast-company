@@ -6,8 +6,12 @@ import { useHistory } from 'react-router-dom';
 const UserCard = ({ userData }) => {
   const history = useHistory();
 
-  const allUsersBtnClickHandler = () => {
+  const editBtnClickHandler = () => {
     history.push(history.location.pathname + '/edit');
+  };
+
+  const allUsersBtnClickHandler = () => {
+    history.push('/users');
   };
 
   return (
@@ -21,9 +25,15 @@ const UserCard = ({ userData }) => {
       </div>
       <button
         className="btn btn-primary btn-sm m-2"
-        onClick={allUsersBtnClickHandler}
+        onClick={editBtnClickHandler}
       >
         Редактировать
+      </button>
+      <button
+        className="btn btn-primary btn-sm m-2"
+        onClick={allUsersBtnClickHandler}
+      >
+        Все пользователи
       </button>
     </>
   );
