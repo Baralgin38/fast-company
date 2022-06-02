@@ -6,6 +6,7 @@ import api from '../../api';
 import RadioField from '../common/form/radioField';
 import MultiSelectField from '../common/form/multiSelectField';
 import transformData from '../../utils/transformData';
+import { validator } from '../../utils/validator';
 import { useHistory } from 'react-router-dom';
 
 const EditUserForm = ({ userId }) => {
@@ -15,6 +16,11 @@ const EditUserForm = ({ userId }) => {
   const [data, setData] = useState();
   const [professions, setProfessions] = useState();
   const [qualities, setQualities] = useState();
+  const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    validate();
+  }, [data]);
 
   useEffect(() => {
     api.users.getUserById(userId).then((userData) =>
@@ -56,6 +62,9 @@ const EditUserForm = ({ userId }) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    const isValidate = validate();
+    if (!isValidate) return;
+
     const { profession: professionId, qualities: userQualities } = data;
 
     const updatedData = {
@@ -68,6 +77,30 @@ const EditUserForm = ({ userId }) => {
     history.goBack();
   };
 
+  const validate = () => {
+    const errors = validator(data, validatorConfig);
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const validatorConfig = {
+    email: {
+      isRequired: {
+        message: 'Электронная почта обязательна для заполнения'
+      },
+      isEmail: {
+        message: 'Электронная почта введена некорректно'
+      }
+    },
+    name: {
+      isRequired: {
+        message: 'Имя обязательно для заполнения'
+      }
+    }
+  };
+
+  const isValid = Object.keys(errors).length === 0;
+
   if (isLoading) {
     return 'Loading...';
   }
@@ -79,12 +112,14 @@ const EditUserForm = ({ userId }) => {
         name="name"
         value={data.name}
         onChange={handleChange}
+        error={errors.name}
       />
       <TextField
         label="Электронная почта"
         name="email"
         value={data.email}
         onChange={handleChange}
+        error={errors.email}
       />
       <SelectField
         label="Выберите свою профессию"
@@ -93,6 +128,7 @@ const EditUserForm = ({ userId }) => {
         options={professions}
         defaultOption="Choose.."
         onChange={handleChange}
+        error={errors.profession}
       />
       <RadioField
         options={[
@@ -111,7 +147,11 @@ const EditUserForm = ({ userId }) => {
         name="qualities"
         label="Выберите ваши качества"
       />
-      <button type="submit" className="btn btn-primary w-100 mx-auto">
+      <button
+        type="submit"
+        className="btn btn-primary w-100 mx-auto"
+        disabled={!isValid}
+      >
         Обновить данные
       </button>
     </form>
