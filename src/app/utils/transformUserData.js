@@ -1,13 +1,7 @@
-// Немного дописал функцию - при обновлении данных пользователя если не менять профессию,
-// то в функцию улетал объект с полями 'name' и 'id' а внутри условие ищет поле value для преобразования.
 const getProfessionById = (id, professions) => {
   for (const prof of professions) {
-    if (typeof id !== 'object') {
-      if (prof.value === id) {
-        return { _id: prof.value, name: prof.label };
-      }
-    } else {
-      return id;
+    if (prof.value === id) {
+      return { _id: prof.value, name: prof.label };
     }
   }
 };
