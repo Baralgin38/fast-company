@@ -17,8 +17,8 @@ const RegisterForm = () => {
     licence: false
   });
   const [errors, setErrors] = useState({});
-  const [professions, setProfessions] = useState({});
-  const [qualities, setQualities] = useState({});
+  const [professions, setProfessions] = useState([]);
+  const [qualities, setQualities] = useState([]);
 
   useEffect(() => {
     validate();
