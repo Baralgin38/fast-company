@@ -7,6 +7,7 @@ import SearchStatus from '../../ui/searchStatus';
 import api from '../../../api';
 import _ from 'lodash';
 import SearchField from '../../ui/searchField';
+import { useUser } from '../../../hooks/useUsers';
 
 const UsersListPage = () => {
   const pageSize = 6;
@@ -14,15 +15,14 @@ const UsersListPage = () => {
   const [professions, setProfessions] = useState();
   const [selectedProf, setSelectedProf] = useState();
   const [sortBy, setSortBy] = useState({ iter: 'name', order: 'asc' });
-  const [users, setUsers] = useState();
   const [searchValue, setSearchValue] = useState('');
 
-  useEffect(() => {
-    api.users.fetchAll().then((data) => setUsers(data));
-  }, []);
+  const { users } = useUser();
+  console.log(users);
 
   const handleDelete = (id) => {
-    setUsers((prevState) => prevState.filter((user) => user._id !== id));
+    // setUsers((prevState) => prevState.filter((user) => user._id !== id));
+    console.log(id);
   };
 
   const handleToggleBookmark = (id) => {
@@ -34,7 +34,8 @@ const UsersListPage = () => {
       return user;
     });
 
-    setUsers(updatedState);
+    // setUsers(updatedState);
+    console.log(updatedState);
   };
 
   useEffect(() => {
