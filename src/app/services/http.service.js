@@ -5,7 +5,6 @@ import configFile from '../config.json';
 const http = axios.create({
   baseURL: configFile.apiEndpoint
 });
-// axios.defaults.baseURL = configFile.apiEndpoint;
 
 http.interceptors.request.use(
   function (config) {

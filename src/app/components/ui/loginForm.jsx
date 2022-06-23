@@ -2,8 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { validator } from '../../utils/validator';
 import CheckBoxField from '../common/form/checkBoxField';
 import TextField from '../common/form/textField';
+import { useAuth } from '../../hooks/useAuth';
+import { useHistory } from 'react-router-dom';
 
 const LoginForm = () => {
+  const history = useHistory();
+
   const [data, setData] = useState({ email: '', password: '', stayOn: false });
   const [errors, setErrors] = useState({});
 
@@ -43,15 +47,22 @@ const LoginForm = () => {
     }
   };
 
+  const { signIn } = useAuth();
+
   const handleChange = (target) => {
     setData((prevState) => ({ ...prevState, [target.name]: target.value }));
   };
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
     const isValidate = validate();
     if (!isValidate) return;
-    console.log(data);
+    try {
+      await signIn(data);
+      history.push('/');
+    } catch (error) {
+      setErrors(error);
+    }
   };
 
   const isValid = Object.keys(errors).length === 0;
