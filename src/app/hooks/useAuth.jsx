@@ -23,6 +23,21 @@ const AuthProvider = ({ children }) => {
     }
   }, [error]);
 
+  useEffect(() => {
+    if (localStorageService.getAccessToken()) {
+      getUserData();
+    }
+  }, []);
+
+  async function getUserData() {
+    try {
+      const { content } = await userService.getCurrentUser();
+      setCurrentUser(content);
+    } catch (error) {
+      errorCatcher(error);
+    }
+  }
+
   function randomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
@@ -73,6 +88,7 @@ const AuthProvider = ({ children }) => {
 
       console.log(data);
       localStorageService.setTokens(data);
+      getUserData();
     } catch (error) {
       errorCatcher(error);
       const { code, message } = error.response.data.error;
@@ -90,7 +106,7 @@ const AuthProvider = ({ children }) => {
 
   async function createUser(data) {
     try {
-      const { content } = userService.create(data);
+      const { content } = await userService.create(data);
       setCurrentUser(content);
     } catch (error) {
       errorCatcher(error);
