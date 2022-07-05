@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
-import { createAvatarUrl } from '../../utils/createAvatarUrl';
 
 const NavProfile = () => {
   const { currentUser } = useAuth();
@@ -14,7 +13,7 @@ const NavProfile = () => {
       <div className="btn dropdown-toggle d-flex align-items-center">
         <div className="me-2">{currentUser.name}</div>
         <img
-          src={createAvatarUrl()}
+          src={currentUser.image}
           alt=""
           height="40"
           className="img-responsive rounded-circle"

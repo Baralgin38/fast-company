@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import localStorageService from '../services/localStorage.service';
 import { useHistory } from 'react-router-dom';
+import { createAvatarUrl } from '../utils/createAvatarUrl';
 
 export const httpAuth = axios.create({
   baseURL: 'https://identitytoolkit.googleapis.com/v1/',
@@ -74,6 +75,7 @@ const AuthProvider = ({ children }) => {
       localStorageService.setTokens(data);
       await createUser({
         _id: data.localId,
+        image: createAvatarUrl(),
         email,
         rate: randomInt(1, 5),
         completedMeetings: randomInt(0, 200),
