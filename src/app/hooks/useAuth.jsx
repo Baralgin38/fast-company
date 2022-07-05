@@ -95,7 +95,7 @@ const AuthProvider = ({ children }) => {
 
       console.log(data);
       localStorageService.setTokens(data);
-      getUserData();
+      await getUserData();
     } catch (error) {
       errorCatcher(error);
       const { code, message } = error.response.data.error;
