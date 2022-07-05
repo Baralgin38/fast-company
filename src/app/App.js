@@ -5,6 +5,7 @@ import Login from './layouts/login';
 import NavBar from './components/ui/navBar';
 import { Switch, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { ProfessionProvider } from './hooks/useProfession';
 import { QualityProvider } from './hooks/useQualities';
 import AuthProvider from './hooks/useAuth';
