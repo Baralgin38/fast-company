@@ -4,18 +4,18 @@ import UsersTable from '../../ui/usersTable';
 import { paginate } from '../../../utils/paginate';
 import GroupList from '../../common/groupList';
 import SearchStatus from '../../ui/searchStatus';
-import api from '../../../api';
 import _ from 'lodash';
 import SearchField from '../../ui/searchField';
 import { useUser } from '../../../hooks/useUsers';
+import { useProfessions } from '../../../hooks/useProfession';
 
 const UsersListPage = () => {
   const pageSize = 6;
   const [currentPage, setCurrentPage] = useState(1);
-  const [professions, setProfessions] = useState();
   const [selectedProf, setSelectedProf] = useState();
   const [sortBy, setSortBy] = useState({ iter: 'name', order: 'asc' });
   const [searchValue, setSearchValue] = useState('');
+  const { isLoading: professionsLoading, professions } = useProfessions();
 
   const { users } = useUser();
   console.log(users);
@@ -37,10 +37,6 @@ const UsersListPage = () => {
     // setUsers(updatedState);
     console.log(updatedState);
   };
-
-  useEffect(() => {
-    api.professions.fetchAll().then((data) => setProfessions(data));
-  }, []);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -92,7 +88,7 @@ const UsersListPage = () => {
 
     return (
       <div className="d-flex">
-        {professions && (
+        {professions && !professionsLoading && (
           <div className="d-flex flex-column flex-shrink-0 p-3">
             <GroupList
               items={professions}
