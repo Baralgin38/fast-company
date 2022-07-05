@@ -20,8 +20,7 @@ export const CommentsProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    setComments(null);
-    setLoading(false);
+    getComments();
   }, []);
 
   useEffect(() => {
@@ -45,6 +44,17 @@ export const CommentsProvider = ({ children }) => {
       console.log(content);
     } catch (error) {
       errorCatcher(error);
+    }
+  }
+
+  async function getComments() {
+    try {
+      const { content } = await commentService.getComments(userId);
+      setComments(content);
+    } catch (error) {
+      errorCatcher(error);
+    } finally {
+      setLoading(false);
     }
   }
 
