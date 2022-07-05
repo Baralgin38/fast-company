@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
+import NavProfile from './navProfile';
 
 const NavBar = () => {
   const { currentUser } = useAuth();
@@ -23,7 +24,7 @@ const NavBar = () => {
         </ul>
         <div className="d-flex">
           {currentUser ? (
-            <p>User</p>
+            <NavProfile />
           ) : (
             <NavLink to="/login" className="nav-link">
               Login
