@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-import { createAvatarUrl } from '../../utils/createAvatarUrl';
+import { useAuth } from '../../hooks/useAuth';
 
-const UserCard = ({ name, profession, rate }) => {
+const UserCard = ({ name, profession, rate, image, _id }) => {
   const history = useHistory();
+  const { currentUser } = useAuth();
 
   const editBtnClickHandler = () => {
     history.push(history.location.pathname + '/edit');
@@ -13,14 +14,17 @@ const UserCard = ({ name, profession, rate }) => {
   return (
     <div className="card mb-3">
       <div className="card-body">
-        <button
-          className="position-absolute top-0 end-0 btn btn-light btn-sm"
-          onClick={editBtnClickHandler}
-        >
-          <i className="bi bi-gear"></i>
-        </button>
+        {currentUser._id === _id && (
+          <button
+            className="position-absolute top-0 end-0 btn btn-light btn-sm"
+            onClick={editBtnClickHandler}
+          >
+            <i className="bi bi-gear"></i>
+          </button>
+        )}
+
         <div className="d-flex flex-column align-items-center text-center position-relative">
-          <img src={createAvatarUrl()} className="rounded-circle" width="150" />
+          <img src={image} className="rounded-circle" width="150" />
           <div className="mt-3">
             <h4>{name}</h4>
             <p className="text-secondary mb-1">{profession}</p>
@@ -42,7 +46,9 @@ const UserCard = ({ name, profession, rate }) => {
 UserCard.propTypes = {
   name: PropTypes.string.isRequired,
   profession: PropTypes.string.isRequired,
-  rate: PropTypes.number.isRequired
+  rate: PropTypes.number.isRequired,
+  image: PropTypes.string.isRequired,
+  _id: PropTypes.string.isRequired
 };
 
 export default UserCard;

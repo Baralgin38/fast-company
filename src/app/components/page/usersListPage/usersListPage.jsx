@@ -8,6 +8,7 @@ import _ from 'lodash';
 import SearchField from '../../ui/searchField';
 import { useUser } from '../../../hooks/useUsers';
 import { useProfessions } from '../../../hooks/useProfession';
+import { useAuth } from '../../../hooks/useAuth';
 
 const UsersListPage = () => {
   const pageSize = 6;
@@ -16,7 +17,7 @@ const UsersListPage = () => {
   const [sortBy, setSortBy] = useState({ iter: 'name', order: 'asc' });
   const [searchValue, setSearchValue] = useState('');
   const { isLoading: professionsLoading, professions } = useProfessions();
-
+  const { currentUser } = useAuth();
   const { users } = useUser();
   console.log(users);
 
@@ -75,13 +76,18 @@ const UsersListPage = () => {
   };
 
   if (users) {
-    const filteredUsers = selectedProf
-      ? users.filter(
-          (user) =>
-            JSON.stringify(user.profession) === JSON.stringify(selectedProf)
-        )
-      : searchUser() || users;
+    function filterUsers(data) {
+      const filteredUsers = selectedProf
+        ? users.filter(
+            (user) =>
+              JSON.stringify(user.profession) === JSON.stringify(selectedProf)
+          )
+        : searchUser() || users;
 
+      return filteredUsers.filter((u) => u._id !== currentUser._id);
+    }
+
+    const filteredUsers = filterUsers(users);
     const count = filteredUsers.length;
     const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]);
     const userCrop = paginate(sortedUsers, currentPage, pageSize);
