@@ -10,19 +10,14 @@ import { CommentsProvider } from '../../../hooks/useComments';
 const UserPage = ({ userId }) => {
   const { getUserById } = useUser();
   const user = getUserById(userId);
+
   return (
     <>
       {user ? (
         <div className="container mt-4">
           <div className="row gutters-sm">
             <div className="col-md-4 mb-3">
-              <UserCard
-                name={user.name}
-                profession={user.profession.name}
-                rate={user.rate}
-                image={user.image}
-                _id={user._id}
-              />
+              <UserCard user={user} />
               <QualitiesCard qualities={user.qualities} />
               <MeetingsCard meetings={user.completedMeetings} />
             </div>

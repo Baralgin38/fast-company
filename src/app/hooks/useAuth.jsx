@@ -104,7 +104,6 @@ const AuthProvider = ({ children }) => {
         returnSecureToken: true
       });
 
-      console.log(data);
       localStorageService.setTokens(data);
       await getUserData();
     } catch (error) {
@@ -131,13 +130,23 @@ const AuthProvider = ({ children }) => {
     }
   }
 
+  async function updateUser(data) {
+    try {
+      await userService.update(data);
+    } catch (error) {
+      error(error);
+    }
+  }
+
   function errorCatcher(error) {
     const { message } = error.response.data;
     setError(message);
   }
 
   return (
-    <AuthContext.Provider value={{ signUp, signIn, currentUser, logOut }}>
+    <AuthContext.Provider
+      value={{ signUp, signIn, currentUser, logOut, updateUser }}
+    >
       {!isLoading ? children : 'Loading...'}
     </AuthContext.Provider>
   );

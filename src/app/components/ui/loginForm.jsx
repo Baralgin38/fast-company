@@ -33,16 +33,6 @@ const LoginForm = () => {
     password: {
       isRequired: {
         message: 'Пароль обязателен для заполнения'
-      },
-      isCapitalLetter: {
-        message: 'Пароль должен содержать минимум одну заглавную букву'
-      },
-      isContainDigit: {
-        message: 'Пароль должен содержать минимум одну цифру'
-      },
-      min: {
-        message: 'Минимальная длинная пароля 8 символов',
-        value: 8
       }
     }
   };

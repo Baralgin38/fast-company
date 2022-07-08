@@ -18,6 +18,14 @@ const userService = {
     );
 
     return data;
+  },
+  update: async (updateData) => {
+    const { data } = await httpService.patch(
+      userEndpoint + updateData._id,
+      updateData
+    );
+
+    return data;
   }
 };
 
