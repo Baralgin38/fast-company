@@ -19,7 +19,6 @@ const UsersListPage = () => {
   const { isLoading: professionsLoading, professions } = useProfessions();
   const { currentUser } = useAuth();
   const { users } = useUser();
-  console.log(users);
 
   const handleDelete = (id) => {
     // setUsers((prevState) => prevState.filter((user) => user._id !== id));
