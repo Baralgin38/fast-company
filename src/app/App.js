@@ -7,7 +7,6 @@ import { Switch, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ProfessionProvider } from './hooks/useProfession';
-import { QualityProvider } from './hooks/useQualities';
 import AuthProvider from './hooks/useAuth';
 import ProtectedRoute from './components/common/protectedRoute';
 import LogOut from './layouts/logOut';
@@ -25,16 +24,14 @@ const App = () => {
     <>
       <AuthProvider>
         <NavBar />
-        <QualityProvider>
-          <ProfessionProvider>
-            <Switch>
-              <Route exact path="/" component={Main} />
-              <Route path="/login/:type?" component={Login} />
-              <Route path="/logout" component={LogOut} />
-              <ProtectedRoute path="/users/:userId?/:edit?" component={Users} />
-            </Switch>
-          </ProfessionProvider>
-        </QualityProvider>
+        <ProfessionProvider>
+          <Switch>
+            <Route exact path="/" component={Main} />
+            <Route path="/login/:type?" component={Login} />
+            <Route path="/logout" component={LogOut} />
+            <ProtectedRoute path="/users/:userId?/:edit?" component={Users} />
+          </Switch>
+        </ProfessionProvider>
       </AuthProvider>
       <ToastContainer />
     </>

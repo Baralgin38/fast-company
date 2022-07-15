@@ -8,7 +8,8 @@ import { validator } from '../../utils/validator';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useProfessions } from '../../hooks/useProfession';
-import { useQuality } from '../../hooks/useQualities';
+import { useSelector } from 'react-redux';
+import { getQualities, getQualitiesLoadingStatus } from '../../store/qualities';
 
 const EditUserForm = ({ userId }) => {
   const history = useHistory();
@@ -24,7 +25,9 @@ const EditUserForm = ({ userId }) => {
   const [errors, setErrors] = useState({});
   const { currentUser, updateUser } = useAuth();
   const { professions } = useProfessions();
-  const { qualities, isLoading: isQualitiesLoading } = useQuality();
+
+  const qualities = useSelector(getQualities());
+  const isQualitiesLoading = useSelector(getQualitiesLoadingStatus());
 
   useEffect(() => {
     if (!isQualitiesLoading) {
