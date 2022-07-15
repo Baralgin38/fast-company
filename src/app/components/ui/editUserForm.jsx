@@ -7,9 +7,9 @@ import MultiSelectField from '../common/form/multiSelectField';
 import { validator } from '../../utils/validator';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
-import { useProfessions } from '../../hooks/useProfession';
 import { useSelector } from 'react-redux';
 import { getQualities, getQualitiesLoadingStatus } from '../../store/qualities';
+import { getProfessions } from '../../store/professions';
 
 const EditUserForm = ({ userId }) => {
   const history = useHistory();
@@ -24,7 +24,7 @@ const EditUserForm = ({ userId }) => {
 
   const [errors, setErrors] = useState({});
   const { currentUser, updateUser } = useAuth();
-  const { professions } = useProfessions();
+  const professions = useSelector(getProfessions());
 
   const qualities = useSelector(getQualities());
   const isQualitiesLoading = useSelector(getQualitiesLoadingStatus());

@@ -7,8 +7,12 @@ import SearchStatus from '../../ui/searchStatus';
 import _ from 'lodash';
 import SearchField from '../../ui/searchField';
 import { useUser } from '../../../hooks/useUsers';
-import { useProfessions } from '../../../hooks/useProfession';
 import { useAuth } from '../../../hooks/useAuth';
+import { useSelector } from 'react-redux';
+import {
+  getProfessions,
+  getProfessionsLoadingStatus
+} from '../../../store/professions';
 
 const UsersListPage = () => {
   const pageSize = 6;
@@ -16,9 +20,10 @@ const UsersListPage = () => {
   const [selectedProf, setSelectedProf] = useState();
   const [sortBy, setSortBy] = useState({ iter: 'name', order: 'asc' });
   const [searchValue, setSearchValue] = useState('');
-  const { isLoading: professionsLoading, professions } = useProfessions();
   const { currentUser } = useAuth();
   const { users } = useUser();
+  const professionsLoading = useSelector(getProfessionsLoadingStatus());
+  const professions = useSelector(getProfessions());
 
   const handleDelete = (id) => {
     // setUsers((prevState) => prevState.filter((user) => user._id !== id));
@@ -79,7 +84,8 @@ const UsersListPage = () => {
       const filteredUsers = selectedProf
         ? users.filter(
             (user) =>
-              JSON.stringify(user.profession) === JSON.stringify(selectedProf)
+              JSON.stringify(user.profession) ===
+              JSON.stringify(selectedProf._id)
           )
         : searchUser() || users;
 
