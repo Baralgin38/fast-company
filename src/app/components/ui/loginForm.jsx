@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { validator } from '../../utils/validator';
 import CheckBoxField from '../common/form/checkBoxField';
 import TextField from '../common/form/textField';
-import { useAuth } from '../../hooks/useAuth';
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { signIn } from '../../store/users';
 
 const LoginForm = () => {
   const history = useHistory();
@@ -37,24 +38,20 @@ const LoginForm = () => {
     }
   };
 
-  const { signIn } = useAuth();
+  const dispatch = useDispatch();
 
   const handleChange = (target) => {
     setData((prevState) => ({ ...prevState, [target.name]: target.value }));
   };
 
-  const handleSubmit = async (evt) => {
+  const handleSubmit = (evt) => {
     evt.preventDefault();
     const isValidate = validate();
     if (!isValidate) return;
-    try {
-      await signIn(data);
-      history.push(
-        history.location.state ? history.location.state.from.pathname : '/'
-      );
-    } catch (error) {
-      setErrors(error);
-    }
+    const redirect = history.location.state
+      ? history.location.state.from.pathname
+      : '/';
+    dispatch(signIn({ payload: data, redirect }));
   };
 
   const isValid = Object.keys(errors).length === 0;
