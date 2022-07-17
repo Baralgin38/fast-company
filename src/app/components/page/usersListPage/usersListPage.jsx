@@ -6,13 +6,13 @@ import GroupList from '../../common/groupList';
 import SearchStatus from '../../ui/searchStatus';
 import _ from 'lodash';
 import SearchField from '../../ui/searchField';
-import { useUser } from '../../../hooks/useUsers';
 import { useAuth } from '../../../hooks/useAuth';
 import { useSelector } from 'react-redux';
 import {
   getProfessions,
   getProfessionsLoadingStatus
 } from '../../../store/professions';
+import { getUsersList } from '../../../store/users';
 
 const UsersListPage = () => {
   const pageSize = 6;
@@ -21,7 +21,7 @@ const UsersListPage = () => {
   const [sortBy, setSortBy] = useState({ iter: 'name', order: 'asc' });
   const [searchValue, setSearchValue] = useState('');
   const { currentUser } = useAuth();
-  const { users } = useUser();
+  const users = useSelector(getUsersList());
   const professionsLoading = useSelector(getProfessionsLoadingStatus());
   const professions = useSelector(getProfessions());
 
