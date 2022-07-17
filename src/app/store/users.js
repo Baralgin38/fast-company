@@ -2,6 +2,8 @@ import { createSlice, createAction } from '@reduxjs/toolkit';
 import authService from '../services/auth.service';
 import localStorageService from '../services/localStorage.service';
 import userService from '../services/user.service';
+import { createAvatarUrl } from '../utils/createAvatarUrl';
+import { randomInt } from '../utils/randomInt';
 
 const usersSlice = createSlice({
   name: 'users',
@@ -26,10 +28,16 @@ const usersSlice = createSlice({
       state.isLoading = false;
     },
     authRequestSuccess: (state, action) => {
-      state.auth = { ...action.paylod, isLoggedIn: true };
+      state.auth = { ...action.payload, isLoggedIn: true };
     },
     authRequestFailed: (state, action) => {
       state.error = action.payload;
+    },
+    userCreated: (state, action) => {
+      if (!Array.isArray(state.entities)) {
+        state.entities = [];
+      }
+      state.entities.push(action.payload);
     }
   }
 });
@@ -40,10 +48,13 @@ const {
   usersReceived,
   usersRequestFailed,
   authRequestSuccess,
-  authRequestFailed
+  authRequestFailed,
+  userCreated
 } = actions;
 
 const authRequested = createAction('users/authRequested');
+const userCreateRequested = createAction('users/userCreateRequested');
+const createUserFailed = createAction('users/createUserFailed');
 
 export const signUp =
   ({ email, password, ...rest }) =>
@@ -53,10 +64,33 @@ export const signUp =
       const data = await authService.register({ email, password });
       localStorageService.setTokens(data);
       dispatch(authRequestSuccess({ userId: data.localId }));
+      dispatch(
+        createUser({
+          _id: data.localId,
+          image: createAvatarUrl(),
+          email,
+          rate: randomInt(1, 5),
+          completedMeetings: randomInt(0, 200),
+          ...rest
+        })
+      );
     } catch (error) {
       dispatch(authRequestFailed(error.message));
     }
   };
+
+function createUser(payload) {
+  return async (dispatch) => {
+    dispatch(userCreateRequested());
+
+    try {
+      const { content } = await userService.create(payload);
+      dispatch(userCreated(content));
+    } catch (error) {
+      dispatch(createUserFailed(error.message));
+    }
+  };
+}
 
 export const loadUsersList = () => async (dispatch, getState) => {
   dispatch(usersRequested());
