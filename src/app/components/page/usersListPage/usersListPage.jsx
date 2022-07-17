@@ -88,7 +88,7 @@ const UsersListPage = () => {
           )
         : searchUser() || users;
 
-      return filteredUsers.filter((u) => u._id !== currentUserId._id);
+      return filteredUsers.filter((u) => u._id !== currentUserId);
     }
 
     const filteredUsers = filterUsers(users);

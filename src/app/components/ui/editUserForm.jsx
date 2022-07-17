@@ -10,6 +10,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { useSelector } from 'react-redux';
 import { getQualities, getQualitiesLoadingStatus } from '../../store/qualities';
 import { getProfessions } from '../../store/professions';
+import { getCurrentUserData } from '../../store/users';
 
 const EditUserForm = ({ userId }) => {
   const history = useHistory();
@@ -23,7 +24,8 @@ const EditUserForm = ({ userId }) => {
   });
 
   const [errors, setErrors] = useState({});
-  const { currentUser, updateUser } = useAuth();
+  const currentUser = useSelector(getCurrentUserData());
+  const { updateUser } = useAuth();
   const professions = useSelector(getProfessions());
 
   const qualities = useSelector(getQualities());
