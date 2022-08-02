@@ -32,7 +32,7 @@ const commentsSlice = createSlice({
     },
     commentDeleted: (state, action) => {
       state.entities = state.entities.filter(
-        (comment) => comment._id !== action.payload
+        (comment) => comment._id !== action.payload.id
       );
     },
     commentDeleteFailed: (state, action) => {
@@ -92,7 +92,7 @@ export const deleteComment = (id) => async (dispatch) => {
 
   try {
     await commentService.removeComment(id);
-    dispatch(commentDeleted(id));
+    dispatch(commentDeleted({ id }));
   } catch (error) {
     dispatch(commentDeleteFailed(error.message));
   }
