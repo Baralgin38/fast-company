@@ -9,7 +9,7 @@ router.post("/signUp", async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const existingUser = awaitUser.findOne({ email });
+    const existingUser = await User.findOne({ email });
 
     if (existingUser) {
       return res.status(400).json({
@@ -29,6 +29,7 @@ router.post("/signUp", async (req, res) => {
     });
 
     const tokens = tokenService.generate({ _id: newUser._id });
+    await tokenService.save(newUser._id, tokens.refreshToken);
 
     res.status(201).send({ ...tokens, userId: newUser._id });
   } catch (error) {
