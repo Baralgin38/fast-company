@@ -1,16 +1,19 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
 const User = require("../models/User");
+const auth = require("../middleware/auth.middleware");
 
-router.patch("/:userID", (req, res) => {
+router.patch("/:userId", auth, async (req, res) => {
   try {
     const { userId } = req.params;
 
-    if (userId) {
-      const updatedUser = await User.findByIdAndUpdate(userId, req.body, { new: true });
-      res.status(200).send(updatedUser)
+    if (userId === req.user._id) {
+      const updatedUser = await User.findByIdAndUpdate(userId, req.body, {
+        new: true,
+      });
+      res.status(200).send(updatedUser);
     } else {
-      res.status(401).json({message: 'Unauthorized'})
+      res.status(401).json({ message: "Unauthorized" });
     }
   } catch (error) {
     res.status(500).json({
@@ -19,7 +22,7 @@ router.patch("/:userID", (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
     const list = await User.find({});
     res.status(200).send(list);
